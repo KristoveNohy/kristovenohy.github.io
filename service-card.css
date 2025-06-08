@@ -96,7 +96,7 @@
   transform: translateZ(0);
 }
 
-.overlay {
+.card > .overlay {
   width: 118px;
   position: absolute;
   height: 118px;
