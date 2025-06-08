@@ -1,20 +1,33 @@
 
 .services {
     background-image: url(img/patternpad-services.jpg);
-    max-width: 1500px;
-    margin-inline: auto;
 }
 .services > main {
+    max-width: 1200px;
+    margin-inline: auto;
     justify-items: center;
     flex-wrap: wrap;
-    grid-template-columns: 1fr 1fr 1fr;
-    display: grid;
+    gap: auto;
+    display: flex;
 }
-.wallet {
+.zeny {
   --bg-color: var(--pink);
   --bg-color-light: #f0e7ff;
   --text-color-hover: #fff;
   --box-shadow-color: rgba(206, 178, 252, 0.48);
+}
+
+.pary {
+  --bg-color: var(--beige);
+  --bg-color-light: #e7f3ff;
+  --text-color-hover: #fff;
+  --box-shadow-color: rgba(249, 252, 178, 0.48);
+}
+.muzi {
+  --bg-color: var(--cyan);
+  --bg-color-light: #e7f3ff;
+  --text-color-hover: #fff;
+  --box-shadow-color: rgba(252, 248, 178, 0.48);
 }
 
 .card {
