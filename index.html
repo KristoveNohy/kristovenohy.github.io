@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Navbar</title>
+  <link href="https://fonts.googleapis.com/css2?family=Lora&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="service-card.css">
+  <style>
+    :root {
+      --pink: #ffafd4;
+      --cyan: #70e3e7;
+      --beige: #ffde7a;
+      --brown: #a9907e;
+      --black: #000000;
+      --white: #ffffff;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Lora', serif;
+      background-color: var(--white);
+      line-height: 1.6;
+    }
+
+    header {
+      background: linear-gradient(to right, var(--pink), var(--cyan));
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      transition: all 0.3s ease;
+
+      flex-wrap: wrap;
+    }
+
+    header.scrolled {
+      border-bottom-left-radius: 20px;
+      border-bottom-right-radius: 20px;
+      padding-block: 0.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      background-color: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+    }
+
+    .logo img {
+      width: 50px;
+      height: 50px;
+      object-fit: contain;
+    }
+
+    .nav-container {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-grow: 1;
+      justify-content: flex-end;
+      flex-wrap: nowrap;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 1.2rem;
+      list-style: none;
+      flex-wrap: nowrap;
+      justify-content: flex-end;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--black);
+      font-size: 15px;
+      text-transform: uppercase;
+      position: relative;
+      padding: 0.5rem 0;
+      transition: all 0.3s ease-in-out;
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, var(--pink), var(--cyan));
+      left: 0;
+      bottom: -4px;
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    nav a:hover {
+      color: var(--white);
+    }
+
+    .actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn {
+      background: var(--pink);
+      color: var(--white);
+      padding: 0.6rem 1.4rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+      background-color: var(--cyan);
+      color: var(--black);
+    }
+
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 30px;
+      height: 22px;
+      cursor: pointer;
+      z-index: 1100;
+      position: relative;
+    }
+
+    .bar {
+      height: 3px;
+      width: 100%;
+      background-color: var(--black);
+      transition: 0.4s ease;
+      position: absolute;
+      left: 0;
+    }
+
+    .bar:nth-child(1) { top: 0; }
+    .bar:nth-child(2) { top: 9px; }
+    .bar:nth-child(3) { top: 18px; }
+
+    .hamburger.active .bar:nth-child(1) {
+      transform: rotate(45deg);
+      top: 9px;
+    }
+
+    .hamburger.active .bar:nth-child(2) {
+      opacity: 0;
+    }
+
+    .hamburger.active .bar:nth-child(3) {
+      transform: rotate(-45deg);
+      top: 9px;
+    }
+
+    .hero {
+      position: relative;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--white);
+      background: url('img/herophoto.jpg') no-repeat center center;
+      background-size: cover;
+      background-attachment: fixed; /* Parallax efekt */
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      padding: 2rem;
+      animation: fadeIn 1.5s ease-out;
+    }
+
+    .hero-content h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      font-style: normal;
+      margin-bottom: 1rem;
+      animation: bounceIn 1.2s ease-in-out;
+    }
+
+    .hero-content p {
+      font-size: 1.2rem;
+      font-weight: 400;
+      font-style: italic;
+      margin-bottom: 2rem;
+      animation: fadeIn 1.8s ease-out;
+      color: var(--beige);
+    }
+
+    .hero-content .cta {
+      display: inline-block;
+      background: var(--pink);
+      color: var(--black);
+      padding: 0.75rem 2rem;
+      border-radius: 9999px;
+      font-weight: 700;
+      font-style: italic;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      animation: bounceDelay 2.2s ease-in-out;
+    }
+
+    .hero-content .cta:hover {
+      background: var(--cyan);
+      transform: scale(1.05);
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounceIn {
+      0% { transform: scale(0.9); opacity: 0; }
+      50% { transform: scale(1.05); opacity: 0.7; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes bounceDelay {
+      0% { transform: scale(0.95); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @media (max-width: 768px) {
+      .hero-content h1 {
+        font-size: 2.2rem;
+      }
+
+      .hero-content p {
+        font-size: 1rem;
+      }
+    }
+
+    @media (max-width: 1028px) {
+      .hamburger {
+        display: flex;
+      }
+
+      .nav-container {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        height: 100vh;
+        background: linear-gradient(to right, var(--pink), var(--cyan));
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 2rem;
+        gap: 2rem;
+        transition: right 0.4s ease-in-out;
+        z-index: 1000;
+      }
+
+      .nav-container.active {
+        right: 0;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: flex-end;
+      }
+
+      .actions {
+        align-self: flex-end;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header id="main-header">
+    <a href="#" class="logo" style="background-color: white; border-radius: 50%; padding-inline: 6px; padding-top: 4px;">
+      <img src="img/logo.svg" alt="Logo">
+    </a>
+
+    <div class="hamburger" onclick="toggleMenu(this)">
+      <div class="bar"></div>
+      <div class="bar"></div>
+      <div class="bar"></div>
+    </div>
+
+    <div class="nav-container" id="nav">
+      <nav>
+        <ul>
+          <li><a href="#">Moja Cesta</a></li>
+          <li><a href="#">Srdcové témy</a></li>
+          <li><a href="#">Spojené Cesty</a></li>
+          <li><a href="#">Hlasy klientov</a></li>
+          <li><a href="#">Škola lásky</a></li>
+          <li><a href="#">Tvoj darček</a></li>
+        </ul>
+      </nav>
+      <div class="actions">
+        <a href="#" class="btn">Prepojme sa</a>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="overlay"></div>
+    <div class="hero-content">
+      <h1>Nejaky text vymysliet tu</h1>
+      <p>a aj tu bude treba. ale tu to trocha zdlzim pretoze toto by malo byt nieco dlhsie tak aby si si to vedela predstavit</p>
+      <a href="#" class="cta">PREPOJME SA</a>
+    </div>
+  </section>
+  
+  
+
+  <main class="content">
+    <h1>Vitajte na mojej stránke</h1>
+    <p>Toto je testovací obsah, ktorý vám pomôže otestovať, ako sa správa horný panel pri scrollovaní. Pokračujte nižšie a všímajte si, že navbar zostáva stále hore.</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque nec ante non sem facilisis placerat. Morbi varius, sem in condimentum congue, enim augue accumsan quam, a fermentum orci lacus ac nulla. Etiam ut augue sed odio laoreet vulputate. In ut metus et nulla gravida tristique. Etiam tincidunt justo sed nunc hendrerit, in tristique orci viverra.</p>
+    <p>Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Pellentesque at velit sed erat commodo sagittis. Integer porttitor neque nec diam vestibulum, in viverra sem gravida. Curabitur feugiat arcu at metus sodales, ac vulputate quam tincidunt. Cras sit amet nisi nec metus hendrerit tincidunt.</p>
+    <p style="margin-bottom: 1000px;">Tento dlhý odstavec vytvára dostatok priestoru na scrollovanie, aby ste si mohli všimnúť, že horný panel je prilepený navrchu obrazovky. Skrolujte a všímajte si správanie navbaru.</p>
+  </main>
+
+  <script>
+    function toggleMenu(el) {
+      const navContainer = document.getElementById('nav');
+      navContainer.classList.toggle('active');
+      el.classList.toggle('active');
+    }
+
+    document.querySelectorAll('nav a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.getElementById('nav').classList.remove('active');
+        document.querySelector('.hamburger').classList.remove('active');
+      });
+    });
+
+    window.addEventListener('scroll', () => {
+      const header = document.getElementById('main-header');
+      header.classList.toggle('scrolled', window.scrollY > 20);
+    });
+  </script>
+
+</body>
+</html>
